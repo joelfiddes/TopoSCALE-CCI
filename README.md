@@ -1,9 +1,27 @@
 # TopoSCALE-CCI
 TopoSCALE downscaling for the ESA CCI global permafrost model
 
-# Description:
+# ERA5 retrieval
+Retrieval of all CCI parameters as single parameter global annual files. Requires CDS API is set up on server (done for SAGA):
+https://cds.climate.copernicus.eu/api-how-to
 
-# Example:
+Download parameters are configure within script:
+```
+startYear = 2019
+endYear = 2020
+era5dir= "/cluster/projects/nn9606k/era5/"
+timestep = "6"
+plevels = ["1000", "700", "500", "200"]
+```
+and then run:
+```
+python era5_request_CCI.py
+```
+
+# TopoSCALE CCI
+Adapted from TopoSCALE3D a three dimensional downscaling of ERA5 forcing files to a set of points defined in a coordinates text file. In CCI the target resolution is 1km so we simplify the radiation algorithms as slope, aspect and sky view factor are not available.
+
+## Run example:
 
 ```
 python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
@@ -21,6 +39,7 @@ A comma separted ascii file with 3 columns "longitude,latitude,elevation" in tha
 > 178.520797,16.016595,0.036243933
 
 
+## ERA5 retrieval
 
 ## ERA5 input files
 - Single parameter annuanl global files produced by "era5_request_CCI.py ", naming convention: 
