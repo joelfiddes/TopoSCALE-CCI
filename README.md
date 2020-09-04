@@ -17,11 +17,12 @@ python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home
 
 The output is a set of single parameter 9 day NetCDF with the following naming convention:
 
-PARAMETER_TIMEPERIOD_YEAR.nc eg.
+> PARAMETER_TIMEPERIOD_YEAR.nc 
 
+eg.
 
-lwin_1_1980.nc  prate_1_1980.nc  shum_1_1980.nc  swin_1_1980.nc  t_1_1980.nc  ws_1_1980.nc
-lwin_2_1980.nc  prate_2_1980.nc  shum_2_1980.nc  swin_2_1980.nc  t_2_1980.nc  ws_2_1980.nc
+> lwin_1_1980.nc  prate_1_1980.nc  shum_1_1980.nc  swin_1_1980.nc  t_1_1980.nc  ws_1_1980.nc
+> lwin_2_1980.nc  prate_2_1980.nc  shum_2_1980.nc  swin_2_1980.nc  t_2_1980.nc  ws_2_1980.nc
 
 
 
