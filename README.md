@@ -32,7 +32,7 @@ eg.
 - time is in hours since start of period
 - time step is 6h
 
-
+```
     ncdump -c swin_1_1980.nc 
     netcdf swin_1_1980 {
     dimensions:
@@ -62,3 +62,4 @@ eg.
     }
 
 
+```
