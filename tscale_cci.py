@@ -79,7 +79,8 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	# time stuff
 	f = nc.Dataset(zp_file)
 	nctime = f.variables['time']
-	dtime = pd.to_datetime(nc.num2date(nctime[:],nctime.units, calendar="standard"))
+	dtime = pd.to_datetime(nc.num2date(nctime[:],nctime.units, calendar="standard", only_use_cftime_datetimes=False,
+                         only_use_python_datetimes=True))
 
 	if (np.array(np.where(dtime==startDT)).size==0):
 		sys.exit( "SYSTEMEXIT:Start date not in netcdf, end of timeseries")
