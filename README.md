@@ -1,7 +1,7 @@
 # TopoSCALE-CCI
 TopoSCALE downscaling for the ESA CCI global permafrost model
 
-# ERA5 retrieval
+## ERA5 retrieval
 Retrieval of all CCI parameters as single parameter global annual files. Requires CDS API is set up on server (done for SAGA):
 https://cds.climate.copernicus.eu/api-how-to
 
@@ -18,17 +18,16 @@ and then run:
 python era5_request_CCI.py
 ```
 
-# TopoSCALE CCI
+## TopoSCALE CCI
 Adapted from TopoSCALE3D a three dimensional downscaling of ERA5 forcing files to a set of points defined in a coordinates text file. In CCI the target resolution is 1km so we simplify the radiation algorithms as slope, aspect and sky view factor are not available.
 
-## Run example:
+### Run example:
 
 ```
 python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
 ```
-# Details
 
-## coordinates file format
+### coordinates file format
 
 A comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
 
@@ -39,9 +38,9 @@ A comma separted ascii file with 3 columns "longitude,latitude,elevation" in tha
 > 178.520797,16.016595,0.036243933
 
 
-## ERA5 retrieval
+### ERA5 retrieval
 
-## ERA5 input files
+### ERA5 input files
 - Single parameter annuanl global files produced by "era5_request_CCI.py ", naming convention: 
 	- PLEV_ERA5PARNAME_YEAR.nc
 	- SURF_ERA5PARNAME_YEAR.nc
@@ -55,7 +54,7 @@ A comma separted ascii file with 3 columns "longitude,latitude,elevation" in tha
 
 
 
-## Input NetCDF format
+### Input NetCDF format
 
 Standard ERA5 NetCDF format
 
@@ -91,7 +90,7 @@ variables:
 }
 ```
 
-## Output NetCDF format
+### Output NetCDF format
 
 The output is a set of single parameter 9 day NetCDF with the following naming convention:
 
@@ -104,7 +103,7 @@ eg.
 
 
 
-## NetCDF dimensions
+### NetCDF dimensions
 - long amd lat are named as dimensions but do not exist. 
 - Each point is indexed as 1:Npoints corresponding to order in coordinates file
 - time is in hours since start of period
