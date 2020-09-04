@@ -6,12 +6,32 @@ TopoSCALE downscaling for the ESA CCI global permafrost model
 # Example:
 python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
 
-# Deatails
+# Details
 
 ## coordinates file format
 
+A comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
+
+			> 178.55413,16.062615,208.4555
+			> 178.545797,16.051085,270.42717
+			> 178.537463,16.039572,345.13469
+			> 178.52913,16.028075,75.857465
+			> 178.520797,16.016595,0.036243933
+
+
 
 ## ERA5 input files
+- Single parameter annuanl global files produced by fetch_era5_global.py 
+-- PLEV: pressure level pars
+-- SURF: surface pars
+
+
+> PLEV_geopotential_1980.nc         SURF_2m_dewpoint_temperature_1980.nc      SURF_instantaneous_surface_sensible_heat_flux_1980.nc
+> PLEV_relative_humidity_1980.nc    SURF_2m_temperature_1980.nc               SURF_surface_solar_radiation_downwards_1980.nc
+> PLEV_temperature_1980.nc          SURF_friction_velocity_1980.nc            SURF_surface_thermal_radiation_downwards_1980.nc
+> PLEV_u_component_of_wind_1980.nc  SURF_geopotential_1980.nc                 SURF_TOA_incident_solar_radiation_1980.nc
+> PLEV_v_component_of_wind_1980.nc  SURF_instantaneous_moisture_flux_1980.nc  SURF_Total_precipitation_1980.nc
+
 
 ## Output format
 
@@ -27,8 +47,8 @@ eg.
 
 
 ## NetCDF dimensions
-- long amd lat are named but do not exist. 
-- an index of 1: N points exists instead
+- long amd lat are named as dimensions but do not exist. 
+- Each point is indexed as 1:Npoints corresponding to order in coordinates file
 - time is in hours since start of period
 - time step is 6h
 
