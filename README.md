@@ -33,32 +33,32 @@ eg.
 - time step is 6h
 
 
-	ncdump -c swin_1_1980.nc 
-	netcdf swin_1_1980 {
-	dimensions:
-		lon = 27 ;
-		lat = 27 ;
-		time = 36 ;
-	variables:
-		float lon(lon) ;
-		float lat(lat) ;
-		int time(time) ;
-			time:units = "hours since 1980-01-01 00:00:00" ;
-		float swin(lon, time) ;
+    ncdump -c swin_1_1980.nc 
+    netcdf swin_1_1980 {
+    dimensions:
+        lon = 27 ;
+        lat = 27 ;
+        time = 36 ;
+    variables:
+        float lon(lon) ;
+        float lat(lat) ;
+        int time(time) ;
+            time:units = "hours since 1980-01-01 00:00:00" ;
+        float swin(lon, time) ;
 
-	// global attributes:
-			:history = "Created by toposcale on " ;
-	data:
+    // global attributes:
+            :history = "Created by toposcale on " ;
+    data:
 
-	 lon = _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 
-	    _, _, _, _ ;
+     lon = _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 
+        _, _, _, _ ;
 
-	 lat = _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 
-	    _, _, _, _ ;
+     lat = _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 
+        _, _, _, _ ;
 
-	 time = 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 
-	    102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174, 180, 
-	    186, 192, 198, 204, 210 ;
-	}
+     time = 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 
+        102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174, 180, 
+        186, 192, 198, 204, 210 ;
+    }
 
 
