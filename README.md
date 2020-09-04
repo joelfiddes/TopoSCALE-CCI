@@ -5,7 +5,7 @@ TopoSCALE downscaling for the ESA CCI global permafrost model
 Retrieval of all CCI parameters as single parameter global annual files. Requires CDS API is set up on server (done for SAGA):
 https://cds.climate.copernicus.eu/api-how-to
 
-Download parameters are configure within script:
+Download parameters are configured (in practice just year) within script *era5_request_CCI.py*:
 ```
 startYear = 2019
 endYear = 2020
@@ -18,32 +18,10 @@ and then run:
 python era5_request_CCI.py
 ```
 
-## TopoSCALE CCI
-Adapted from TopoSCALE3D a three dimensional downscaling of ERA5 forcing files to a set of points defined in a coordinates text file. In CCI the target resolution is 1km so we simplify the radiation algorithms as slope, aspect and sky view factor are not available.
-
-### Run example:
-
-```
-python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
-```
-
-### coordinates file format
-
-A comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
-
-> 178.55413,16.062615,208.4555
-> 178.545797,16.051085,270.42717
-> 178.537463,16.039572,345.13469
-> 178.52913,16.028075,75.857465
-> 178.520797,16.016595,0.036243933
-
-
-### ERA5 retrieval
-
 ### ERA5 input files
-- Single parameter annuanl global files produced by "era5_request_CCI.py ", naming convention: 
-	- PLEV_ERA5PARNAME_YEAR.nc
-	- SURF_ERA5PARNAME_YEAR.nc
+Files produced by retrieval with naming convention: 
+- PLEV_ERA5PARNAME_YEAR.nc
+- SURF_ERA5PARNAME_YEAR.nc
 
 
 > PLEV_geopotential_1980.nc         SURF_2m_dewpoint_temperature_1980.nc      SURF_instantaneous_surface_sensible_heat_flux_1980.nc
@@ -54,7 +32,7 @@ A comma separted ascii file with 3 columns "longitude,latitude,elevation" in tha
 
 
 
-### Input NetCDF format
+### ERA5 Input NetCDF format
 
 Standard ERA5 NetCDF format
 
@@ -89,6 +67,28 @@ variables:
 		:history = "2019-11-15 02:52:33 GMT by grib_to_netcdf-2.14.0: /opt/ecmwf/eccodes/bin/grib_to_netcdf -o /cache/data0/adaptor.mars.internal-1573786171.4555001-10939-16-686e4b7d-fce8-4399-a243-f8135543b018.nc /cache/tmp/686e4b7d-fce8-4399-a243-f8135543b018-adaptor.mars.internal-1573786171.4562213-10939-8-tmp.grib" ;
 }
 ```
+
+
+## TopoSCALE CCI
+Adapted from TopoSCALE3D a three dimensional downscaling of ERA5 forcing files to a set of points defined in a coordinates text file. In CCI the target resolution is 1km so we simplify the radiation algorithms as slope, aspect and sky view factor are not available.
+
+### Run example:
+
+```
+python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
+```
+
+### Coordinates file format
+
+TopoSCALE-CCI only requires a comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
+
+> 178.55413,16.062615,208.4555
+> 178.545797,16.051085,270.42717
+> 178.537463,16.039572,345.13469
+> 178.52913,16.028075,75.857465
+> 178.520797,16.016595,0.036243933
+
+
 
 ### Output NetCDF format
 
