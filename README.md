@@ -4,6 +4,7 @@ TopoSCALE downscaling for the ESA CCI global permafrost model
 # Description:
 
 # Example:
+
 ```
 python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
 ```
@@ -13,11 +14,11 @@ python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home
 
 A comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
 
-			> 178.55413,16.062615,208.4555
-			> 178.545797,16.051085,270.42717
-			> 178.537463,16.039572,345.13469
-			> 178.52913,16.028075,75.857465
-			> 178.520797,16.016595,0.036243933
+> 178.55413,16.062615,208.4555
+> 178.545797,16.051085,270.42717
+> 178.537463,16.039572,345.13469
+> 178.52913,16.028075,75.857465
+> 178.520797,16.016595,0.036243933
 
 
 
