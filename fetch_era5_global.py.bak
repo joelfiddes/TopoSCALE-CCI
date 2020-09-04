@@ -87,7 +87,7 @@ def retrieve_era5_surf(startYear,endYear,eraDir, step):
 		dates = [str(startYear), str(endYear)]
 		start = datetime.strptime(dates[0], "%Y")
 		end = datetime.strptime(dates[1], "%Y")
-		dateList = list(OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in range((end - start).days)).keys())
+		dateList = OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in xrange((end - start).days)).keys()
 
 
 		requestDatesVec = []
@@ -163,7 +163,7 @@ def era5_request_surf(var, year, target, time):
 
 		},
 		target)
-	print((target+ " complete"))
+	print(target+ " complete")
 
 def retrieve_era5_plev(startYear,endYear,eraDir, step, plevels):
 	""" Sets up era5 pressure level retrieval.
@@ -221,7 +221,7 @@ def retrieve_era5_plev(startYear,endYear,eraDir, step, plevels):
 		dates = [str(startYear), str(endYear)]
 		start = datetime.strptime(dates[0], "%Y")
 		end = datetime.strptime(dates[1], "%Y")
-		dateList = list(OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in range((end - start).days)).keys())
+		dateList = OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in xrange((end - start).days)).keys()
 
 		requestDatesVec = []
 		targetVec=[]
@@ -297,7 +297,7 @@ def era5_request_plev(var, year, target, time,plevels):
 		'format':'netcdf'
 		},
 		target)
-	print((target+ " complete"))
+	print(target+ " complete")
 
 
 #if __name__ == "__main__":
@@ -334,7 +334,7 @@ def retrieve_era5_tpmm( startYear,endYear,eraDir):
 	dates = [str(startYear), str(endYear)]
 	start = datetime.strptime(dates[0], "%Y")
 	end = datetime.strptime(dates[1], "%Y")
-	dateList = list(OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in range((end - start).days)).keys())
+	dateList = OrderedDict(((start + timedelta(_)).strftime(r"%Y"), None) for _ in xrange((end - start).days)).keys()
 
 	target = eraDir + "tpmm.nc"
 

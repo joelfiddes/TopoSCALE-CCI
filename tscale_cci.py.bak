@@ -99,7 +99,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	# extract timestep
 	dtime= dtime[starti:endi,] 
 
-	print(("Running timestep "+ str(startDT)))
+	print("Running timestep "+ str(startDT))
 
 	#===============================================================================
 	# tscale3d - 3D interpolation of pressure level fields
@@ -467,7 +467,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 
 
 	#======================= all this can be done in first instance need to gen t/z_interp_out additionally
-	tfile = list(plevDict.keys())[list(plevDict.values()).index('t')] 
+	tfile = plevDict.keys()[plevDict.values().index('t')] 
 	t= nc.Dataset(tfile) # key is filename
 	z=nc.Dataset(zp_file) # could be outside loop
 
@@ -698,7 +698,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 
 	ntime = len(gsob.dtime)
 	stephr =a.seconds/60/60
-	rtime=np.array(list(range(len(gsob.dtime))))*stephr
+	rtime=np.array(range(len(gsob.dtime)))*stephr
 
 
 	#===============================================================================

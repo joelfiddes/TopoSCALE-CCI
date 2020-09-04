@@ -34,13 +34,13 @@ from tqdm import tqdm
 
 
 def main(coords,eraDir, outDir,startYear, endYear):
-        years= list(range(int(startYear),int(endYear)+1))
+        years= range(int(startYear),int(endYear)+1)
 
         for year in tqdm(years):
                 print(year)
                 startPeriods = pd.date_range(str(year)+'-01-01', periods=46, freq='8d')
 
-                for startIndex in tqdm(list(range(0,startPeriods.size))):
+                for startIndex in tqdm(range(0,startPeriods.size)):
 
                         start=startPeriods[startIndex]
                         # always start last period at 23rd Dec to ensure 8 day period till 31 Dec
