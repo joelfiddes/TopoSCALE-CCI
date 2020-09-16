@@ -107,7 +107,7 @@ Adapted from TopoSCALE3D a three dimensional downscaling of ERA5 forcing files t
 ```
 python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
 python tscale_cci_run.py  "/cluster/home/fiddes/sebs_points/coords.txt" "/cluster/home/fiddes/nn9606k/era5" "/cluster/home/fiddes/sebs_points/" 1980 2018
-
+ (tscale) [fiddes@c5-57.SAGA ~/nn9606k/TopoSCALE-CCI]$ python tscale_cci_run.py  ../tscalccitest/coords_seb.txt ../era5 ../tscalccitest/ 1980 1981
 ```
 
 ### Coordinates file format
