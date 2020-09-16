@@ -9,17 +9,27 @@ TopoSCALE downscaling for the ESA CCI global permafrost model
 ## Environment setup on SAGA
 https://stackoverflow.com/questions/41274007/anaconda-export-environment-file
 
-### conda create 
+### Maintainer steps
+ - Conda create 
+```
 conda create -n tscale python=3.7
+```
 
-### Conda activate
-conda activate tscale
-
-### export env
+- Export env
+```
+cd TopoSCALE_CCI
 conda env export  > environment.yml
-
-### user runs:
+```
+### User steps
+- User runs env setup:
+```
+cd TopoSCALE-CCI
 conda env create -f environment.yml
+```
+- Conda activate
+```
+conda activate tscale
+```
 
 ## ERA5 retrieval
 Retrieval of all CCI parameters as single parameter global annual files. Requires CDS API is set up on server (done for SAGA):
