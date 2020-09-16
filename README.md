@@ -3,22 +3,22 @@ TopoSCALE downscaling for the ESA CCI global permafrost model
 
 ## Setup
 
-git clone https://github.com/joelfiddes/TopoSCALE-CCI.git
-pip install -r requirements.txt
+- git clone https://github.com/joelfiddes/TopoSCALE-CCI.git
+- pip install -r requirements.txt
 
 ## Environment setup on SAGA
 https://stackoverflow.com/questions/41274007/anaconda-export-environment-file
 
-# conda create 
+### conda create 
 conda create -n tscale python=3.7
 
-# Conda activate
+### Conda activate
 conda activate tscale
 
-# export env
+### export env
 conda env export  > environment.yml
 
-# user runs:
+### user runs:
 conda env create -f environment.yml
 
 ## ERA5 retrieval
