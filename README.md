@@ -1,6 +1,26 @@
 # TopoSCALE-CCI
 TopoSCALE downscaling for the ESA CCI global permafrost model
 
+## Setup
+
+git clone https://github.com/joelfiddes/TopoSCALE-CCI.git
+pip install -r requirements.txt
+
+## Environment setup on SAGA
+https://stackoverflow.com/questions/41274007/anaconda-export-environment-file
+
+# conda create 
+conda create -n tscale python=3.7
+
+# Conda activate
+conda activate tscale
+
+# export env
+conda env export  > environment.yml
+
+# user runs:
+conda env create -f environment.yml
+
 ## ERA5 retrieval
 Retrieval of all CCI parameters as single parameter global annual files. Requires CDS API is set up on server (done for SAGA):
 https://cds.climate.copernicus.eu/api-how-to
@@ -82,13 +102,10 @@ python tscale_cci_run.py  "/cluster/home/fiddes/sebs_points/coords.txt" "/cluste
 
 ### Coordinates file format
 
-TopoSCALE-CCI only requires a comma separted ascii file with 3 columns "longitude,latitude,elevation" in that order (nb: no header) eg:
+ TopoSCALE-CCI only requires a comma separated ascii file with 3 columns "latitude [decimal degrees, -90->90], longitude[decimal degrees, -180->180], elevation (m)" in that order (nb: no header) e.g.:
 
-> 178.55413,16.062615,208.4555
-> 178.545797,16.051085,270.42717
-> 178.537463,16.039572,345.13469
-> 178.52913,16.028075,75.857465
-> 178.520797,16.016595,0.036243933
+> 69.4049, -139.0497,2000
+
 
 
 
