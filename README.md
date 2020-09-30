@@ -17,7 +17,7 @@ conda create -n tscale python=3.7
 
 - Export env
 ```
-cd TopoSCALE_CCI
+cd TopoSCALE-CCI
 conda env export  > environment.yml
 ```
 ### User steps
