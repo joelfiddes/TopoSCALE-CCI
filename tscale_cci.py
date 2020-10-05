@@ -77,7 +77,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	}
 
 	# read in lispoints
-	lp=pd.read_csv(coords, header=None)
+	lpin=pd.read_csv(coords, header=None)
 
 	# make out path for results
 	out = outDir
@@ -113,12 +113,12 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	#===============================================================================
 	# tscale3d - 3D interpolation of pressure level fields
 	#===============================================================================
-	ele= lp.iloc[:,2]#[:,3]
-	lats = lp.iloc[:,0]#[:,2] #[s['lat'] for s in stations]
-	lons = lp.iloc[:,1] +180 #[:,1] #[s['lon'] for s in stations] convert -180-180 to 0-360 
+	ele= lpin.iloc[:,2]#[:,3]
+	lats = lpin.iloc[:,0]#[:,2] #[s['lat'] for s in stations]
+	lons = lpin.iloc[:,1] +180 #[:,1] #[s['lon'] for s in stations] convert -180-180 to 0-360 
 
 	lp = hp.Bunch(ele=ele, lat=lats, lon=lons)
-	#idstat = stations.id#[:,0]#[s['id'] for s in stations]
+	
 	out_xyz_dem = np.asarray([lats,lons,ele*g],order="F" ).transpose()
 
 	# init gtob object
@@ -128,7 +128,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 
 		t= nc.Dataset(plev) # key is filename
 		varname=plevDict[plev] # value of key is par shortname
-		z=nc.Dataset(zp_file) # could be outside loop
+		z=nc.Dataset(zp_file) 
 
 		# init grid stack
 		xdim=out_xyz_dem.shape[0]
@@ -140,7 +140,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 			"""
 	        Return original grid temperatures and geopotential of differnet
 	        pressure levels. The function are called by inLevelInterp() to
-	        get the input ERA-Interim values.
+	        get the input ERA5 values.
 	        
 	        Args: 
 	            variable: Given interpolated climate variable
@@ -218,9 +218,9 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 			#temperatue and elevation interpolation 2d
 			for i in range(shape[0]):
 				ft = RegularGridInterpolator((gridLat,gridLon), 
-			                                  gridT[i,:,:], 'linear', bounds_error=False)
+			                                  gridT[i,::-1,:], 'linear', bounds_error=False)
 				fz = RegularGridInterpolator((gridLat,gridLon), 
-			                                  gridZ[i,:,:], 'linear', bounds_error=False)
+			                                  gridZ[i,::-1,:], 'linear', bounds_error=False)
 				t_interp[i,:] = ft(out_xyz_dem[:,:2] )#temperature
 
 				z_interp[i,:] = fz(out_xyz_dem[:,:2])#elevation
@@ -274,8 +274,8 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		# init grid stack
 		xdim=out_xyz_dem.shape[0]
 		sa_vec = np.zeros(xdim)
+		
 		#names=1:n
-
 		for timestep in range(starti, endi):
 
 			"""
@@ -292,8 +292,9 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 			"""
 			# read in data from variable 'varname'
 			in_v = t[varname][timestep,:,:]#geopotential
+			in_v=in_v[::-1,:] # reverse latitude dimension to agree with ascending 'lat'
 			lat = t.variables['latitude'][:]
-			lat=lat[::-1]
+			lat=lat[::-1] # must be ascending for RegularGridInterpolator
 			lon = t.variables['longitude'][:]
 
 			# 2d interpolation
@@ -499,9 +500,9 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		#temperatue and elevation interpolation 2d
 		for i in range(shape[0]):
 			ft = RegularGridInterpolator((gridLat,gridLon), 
-		                                  gridT[i,:,:], 'linear', bounds_error=False)
+		                                  gridT[i,::-1,:], 'linear', bounds_error=False)
 			fz = RegularGridInterpolator((gridLat,gridLon), 
-		                                  gridZ[i,:,:], 'linear', bounds_error=False)
+		                                  gridZ[i,::-1,:], 'linear', bounds_error=False)
 			t_interp[i,:] = ft(out_xyz_dem[:,:2] )#temperature
 			z_interp[i,:] = fz(out_xyz_dem[:,:2])#elevation
 
