@@ -11,7 +11,7 @@ Args:
 
 Example:
         tscale_cci_run.py  "/cluster/home/fiddes/nn9606k/tscale/coordinates.dat" "/cluster/home/fiddes/nn9606k/era5" "/cluster/home/fiddes/nn9606k/tscale" 1980 2018
-        tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
+        python tscale_cci_run.py "/home/joel/sim/cci_perm_final/sebs_coords.txt"  "/home/joel/sim/cci_perm_final/era5" "/home/joel/sim/cci_perm_final/era5/out" 1980 1980
 
 Details:
         - accepts assci list "coords" lon,lat,ele (no header) eg:

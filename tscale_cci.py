@@ -1,4 +1,6 @@
 """
+python 3
+
 Description:
 	Modified version of tscale3D.py specifically for CCI permafrost. 
 
@@ -11,7 +13,13 @@ Args:
 	 startIndex: Integer 0-46 indicating which annual 8day period to compute (given by tscale_cci_run.py)
 
 Example:
-	tscale_cci.py  "/home/joel/sim/cci_perm_final/coordinates.dat" "/home/joel/sim/cci_perm_final/era5/"  "/home/joel/sim/cci_perm_final/era5/out/" '1980-01-01 00:00:00' '1980-01-10 00:00:00' 0
+	tscale_cci.py  
+	"/home/joel/sim/cci_perm_final/coordinates.dat" 
+	"/home/joel/sim/cci_perm_final/era5/"  
+	"/home/joel/sim/cci_perm_final/era5/out/" 
+	"1980-01-01 00:00:00" 
+	"1980-01-10 00:00:00" 
+	"0"
 
 Details:
 	- Accepts single timestep as argument.
@@ -728,22 +736,25 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		f = nc.Dataset(outDir+"/"+var+"_"+str(startIndex+1)+"_"+str(year)+".nc",'w', format='NETCDF4')
 
 		#make dimensions
+		f.createDimension('time', ntime)
 		f.createDimension('lon', len(lp.lon))
 		f.createDimension('lat', len(lp.lat))
-		f.createDimension('time', ntime)
+		
 
 		#make dimension variables
+		mytime = f.createVariable('time', 'i', ('time',))
 		longitude = f.createVariable('lon',    'f4',('lon',))
 		latitude  = f.createVariable('lat',    'f4',('lat',))
-		mytime = f.createVariable('time', 'i', ('time',))
-		myvar = f.createVariable(var,    'f4',('lon','time'))
+		
+		myvar = f.createVariable(var,    'f4',('time','lon'))
 
 		#assign dimensions
+		mytime[:] = rtime
 		longitude = lp.lon
 		latitude  = lp.lat
-		mytime[:] = rtime
-		myvar[:] = varDict[var]
-
+		
+		myvar[:] = varDict[var].T
+		
 		#metadata
 		f.history = 'Created by toposcale on '
 		mytime.units = 'hours since '+str(gsob.dtime[0])
