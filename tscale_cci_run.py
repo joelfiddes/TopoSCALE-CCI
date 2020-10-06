@@ -30,7 +30,6 @@ import sys
 import tscale_cci
 import datetime
 import pandas as pd
-from tqdm import tqdm
 
 
 def main(coords,eraDir, outDir,startYear, endYear):
@@ -40,8 +39,9 @@ def main(coords,eraDir, outDir,startYear, endYear):
                 print(year)
                 startPeriods = pd.date_range(str(year)+'-01-01', periods=46, freq='8d')
 
-                for startIndex in tqdm(list(range(0,startPeriods.size))):
+                for startIndex in list(range(0,startPeriods.size)):
 
+                        print(startIndex)
                         start=startPeriods[startIndex]
                         # always start last period at 23rd Dec to ensure 8 day period till 31 Dec
                         # python indexing (starts 0) so startIndex 45 == period 46
