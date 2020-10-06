@@ -736,32 +736,63 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		#open
 		f = nc.Dataset(outDir+"/"+var+"_"+str(startIndex+1)+"_"+str(year)+".nc",'w', format='NETCDF4')
 
+		# Implement cf H.2.1 http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/build/cf-conventions.html#idp9763584
+		
+		# #make dimensions
+		# f.createDimension('time', ntime)
+		# f.createDimension('lon', len(lp.lon))
+		# f.createDimension('lat', len(lp.lat))
+		
+
+		# #make dimension variables
+		# mytime = f.createVariable('time', 'i', ('time',))
+		# longitude = f.createVariable('lon',    'f4',('lon',))
+		# latitude  = f.createVariable('lat',    'f4',('lat',))
+		
+		# myvar = f.createVariable(var,    'f4',('time','lon'))
+
+		# #assign dimensions
+		# mytime[:] = rtime
+		# longitude = lp.lon
+		# latitude  = lp.lat
+		
+		# myvar[:] = varDict[var].T
+		
+		# #metadata
+		# from time import ctime
+		# mytime=ctime()
+		# f.history = 'Created by toposcale on '+mytime
+		# mytime.units = 'hours since '+str(gsob.dtime[0])
+		# f.close()
+
 		#make dimensions
 		f.createDimension('time', ntime)
-		f.createDimension('lon', len(lp.lon))
-		f.createDimension('lat', len(lp.lat))
+		f.createDimension('station', len(lp.ele))
+
 		
 
 		#make dimension variables
 		mytime = f.createVariable('time', 'i', ('time',))
-		longitude = f.createVariable('lon',    'f4',('lon',))
-		latitude  = f.createVariable('lat',    'f4',('lat',))
-		
-		myvar = f.createVariable(var,    'f4',('time','lon'))
+		station = f.createVariable('station',    'i',('station',))
+
+		#make variables
+		myvar = f.createVariable(var,    'f4',('time','station'))
+		longitude = f.createVariable('longitude',    'f4',('station'))
+		latitude = f.createVariable('latitude',    'f4',('station'))
 
 		#assign dimensions
 		mytime[:] = rtime
-		longitude = lp.lon
-		latitude  = lp.lat
-		
+		longitude[:] = lp.lon
+		latitude[:]  = lp.lat
+		station[:] = range(len(lp.ele))
 		myvar[:] = varDict[var].T
 		
 		#metadata
-		f.history = 'Created by toposcale on '
+		from time import ctime
+		mycomptime=ctime()
+		f.history = 'Created by tscale-cci on '+mycomptime
 		mytime.units = 'hours since '+str(gsob.dtime[0])
 		f.close()
-
-
 
 
 	print("Toposcale complete!")
