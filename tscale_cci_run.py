@@ -35,7 +35,7 @@ import pandas as pd
 def main(coords,eraDir, outDir,startYear, endYear):
         years= list(range(int(startYear),int(endYear)+1))
 
-        for year in tqdm(years):
+        for year in years:
                 print(year)
                 startPeriods = pd.date_range(str(year)+'-01-01', periods=46, freq='8d')
 
