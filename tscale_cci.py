@@ -49,6 +49,96 @@ import helper as hp
 import solarGeom as sg
 
 
+def calc_Pws(Tk):
+	'''
+	Water vapour saturation pressure, Pws in hPa
+	
+	Args:
+		Air temp, K
+
+	Details:
+	constants valid for -20 - +50degC
+	0.083% max error
+
+	Ref:
+	Eq.6 p5. HUMIDITY CONVERSION FORMULAS, Calculation formulas for humidity, Vaisala 2013
+	'''
+
+	m=7.591386
+	A=6.116441
+	Tn=240.7263
+	Tc=Tk-273.15
+
+	Pws = A* 10 **((m*Tc)/(Tc+Tn))
+	return(Pws)
+
+def calc_Pw(Pws, RH):
+	'''
+	Water vapour pressure. Pw in hPa
+	
+	Args:
+		Pws, Water vapour saturation pressure hPa
+		RH, rel humidity 0-100
+
+	Ref:
+	Eq.1 p3. HUMIDITY CONVERSION FORMULAS, Calculation formulas for humidity, Vaisala 2013
+	'''
+	#Check for RH scale it should be 0-100 not 0-1
+	rhDividr=100
+	if (np.max(RH)< 2): # range is 0-1
+		rhDividr=1
+
+	Pw = (RH/rhDividr) * Pws
+	return(Pw)
+
+def calc_AH(Pw, Tk):
+	''' 
+	Absolute humidity g/m3 
+
+	C = Constant 2.16679 gK/J
+	Pw =Vapour pressure in hPa 
+	Tk = Temperature in K
+
+	Ref:
+	Eq.1 p3. HUMIDITY CONVERSION FORMULAS, Calculation formulas for humidity, Vaisala 2013
+	'''
+
+	C=2.16679
+	Pw_pa=Pw*100
+	AH = C * Pw_pa /Tk
+
+	return (AH)
+
+
+	# specific humidity calc
+	temp = np.array(df.TA) *units('K')
+	rh=np.array(df.RH) *units('percent')
+	P=np.array(df.P) *units('Pa')
+
+	dp = metpy.calc.dewpoint_from_relative_humidity(temp, rh*100)
+	df["SH"] = metpy.calc.specific_humidity_from_dewpoint(dp, P)
+
+def ah_gm3_To_ah_kgkg(ah_gm3,P_pa,Tk ):
+
+	'''
+	1.204kg is mass of m3 air parcel (density) under standard temperature and pressure 
+	'''
+	P0= 1013. #standard_pressure, hPa
+	T0 = 293.15 #standard_pressure, K
+
+	P_hpa = P_pa/100
+	
+
+	mass_of_m3_air = 1.204*(P_hpa/P0) * (T0/Tk) #calc density of air kg/m3 at given T/P
+
+	# divide ah in g/m3 by new density to get AH in g/kg, 
+	# divide by 1000 to get kg/kg
+	AH_kgkg = (ah_gm3/mass_of_m3_air)/1000
+
+
+	return(AH_kgkg)
+	#https://hypertextbook.com/facts/2000/RachelChu.shtml
+
 
 def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	print(startDT)
@@ -718,15 +808,28 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	T = np.single(gtob.t -273.15)
 	gtob.r[gtob.r>100]=100
 	RH = np.single(gtob.r)
-	Abs_Hum = np.single( (6.112 * np.exp( (17.67 * T)/(T+243.5) ) * RH * 2.1674 )/(273.15+T) )
 	ws = np.single( np.sqrt(gtob.u**2+gtob.v**2) )
 	prate = np.single(gtob.prate)
+
+	#===========================================================================
+	# Calculate absolute humidity kg/kg
+	#===========================================================================
+	# Tk=273.15+20
+	# RH=80.
+	# ah = 13.82g/m3
+	pws = calc_Pws(Tk)
+	pw =calc_Pw(pws,RH)
+	ah_gm3 = calc_AH(pw, Tk) # ah in g/m3
+	AH_kgkg = ah_gm3_To_ah_kgkg(ah_gm3,tob.psf,tob.t )
+
+
+
 
 	# Dictionary to loop over
 	varDict={
 	"t":T,
 	"ws"   : ws,
-	"shum" : Abs_Hum,  
+	"ahum" : AH_kgkg,  
 	"swin" : gtob.swin,
 	"lwin" : gtob.lwin, 
 	"prate": prate 
