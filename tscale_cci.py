@@ -155,7 +155,7 @@ def rh2sh(Pw,P ):
 	#' Es <- SVP(t)
 	#' e <- WVP2(70, Es)
 	#' SH(e, p = 101325)
-
+	Pw=Pw.transpose()
 	Mw = 18.01528 # Molecular weight of water vapor g/mol
 	Md = 28.9634 # Molecular weight of dry air g/mol
 	k = Mw / Md
