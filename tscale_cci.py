@@ -855,7 +855,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	"shum" : SH,  
 	"swin" : gtob.swin,
 	"lwin" : gtob.lwin, 
-	"prate": prate 
+	"prate": prate, 
 	"P" : gtob.psf
 	}
 
