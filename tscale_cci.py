@@ -848,6 +848,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 
 
 
+
 	# Dictionary to loop over
 	varDict={
 	"t":T,
@@ -856,10 +857,13 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	"swin" : gtob.swin,
 	"lwin" : gtob.lwin, 
 	"prate": prate, 
-	"P" : gtob.psf
+	"P" : gtob.psf.transpose()
 	}
 
+
+
 	for var in varDict:
+
 		#open
 		f = nc.Dataset(outDir+"/"+var+"_"+str(startIndex+1)+"_"+str(year)+".nc",'w', format='NETCDF4')
 
