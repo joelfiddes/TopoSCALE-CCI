@@ -909,8 +909,8 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 
 		#assign dimensions
 		mytime[:] = rtime
-		longitude[:] = lp.lon
-		latitude[:]  = lp.lat
+		longitude[:] = np.array(lp.lon)
+		latitude[:]  = np.array(lp.lat)
 		station[:] = range(len(lp.ele))
 		myvar[:] = varDict[var].T
 		
