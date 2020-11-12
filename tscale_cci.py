@@ -842,7 +842,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	pws = calc_Pws(gtob.t)
 	pw =calc_Pw(pws,RH)
 	ah_gm3 = calc_AH(pw, gtob.t) # ah in g/m3
-	AH_kgkg = ah_gm3_To_ah_kgkg(ah_gm3,gtob.psf,gtob.t )
+	#AH_kgkg = ah_gm3_To_ah_kgkg(ah_gm3,gtob.psf,gtob.t )
 	SH = rh2sh(pw,gtob.psf )
 
 
