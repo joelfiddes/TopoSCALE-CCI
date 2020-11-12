@@ -139,6 +139,28 @@ def ah_gm3_To_ah_kgkg(ah_gm3,P_pa,Tk ):
 	return(AH_kgkg)
 	#https://hypertextbook.com/facts/2000/RachelChu.shtml
 
+def rh2sh(Pw,P ):
+
+	#' @title calculate specific humidity
+	#' @description calculate specific humidity \eqn{q} based on partial water vapor pressure \eqn{e} under given atmospheric pressure \eqn{p}
+	#' @param e partial water vapor pressure in Pascal (Pa)
+	#' @param p atmospheric pressure in Pascal (Pa). The default is standard atmospheric pressure of 101325Pa.
+	#' @return numeric specific humidity \eqn{q} (\eqn{kg/kg})
+	#' @seealso \code{\link{WVP2}}, \code{\link{WVP2}}, \code{\link{AH}}, \code{\link{RH}}, \code{\link{MR}}.
+	#' @author Jun Cai (\email{cai-j12@@mails.tsinghua.edu.cn}), PhD candidate from
+	#' Department of Earth System Science, Tsinghua University
+	#' @export
+	#' @examples
+	#' t <- 273.15
+	#' Es <- SVP(t)
+	#' e <- WVP2(70, Es)
+	#' SH(e, p = 101325)
+
+	Mw = 18.01528 # Molecular weight of water vapor g/mol
+	Md = 28.9634 # Molecular weight of dry air g/mol
+	k = Mw / Md
+	q = k * Pw / (P - (1 - k) * Pw)
+	return(q)
 
 def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	print(startDT)
@@ -789,7 +811,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	SWfdirCor=SWfdir #*dprod
 
 	gtob.swin  =  SWfdiff+ SWfdirCor.T
-
+	gtob.psf = psf
 	print("Swin done")
 
 
@@ -817,10 +839,11 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	# Tk=273.15+20
 	# RH=80.
 	# ah = 13.82g/m3
-	pws = calc_Pws(Tk)
+	pws = calc_Pws(gtob.t)
 	pw =calc_Pw(pws,RH)
-	ah_gm3 = calc_AH(pw, Tk) # ah in g/m3
-	AH_kgkg = ah_gm3_To_ah_kgkg(ah_gm3,tob.psf,tob.t )
+	ah_gm3 = calc_AH(pw, gtob.t) # ah in g/m3
+	AH_kgkg = ah_gm3_To_ah_kgkg(ah_gm3,gtob.psf,gtob.t )
+	SH = rh2sh(pw,gtob.psf )
 
 
 
@@ -829,10 +852,11 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	varDict={
 	"t":T,
 	"ws"   : ws,
-	"ahum" : AH_kgkg,  
+	"shum" : SH,  
 	"swin" : gtob.swin,
 	"lwin" : gtob.lwin, 
 	"prate": prate 
+	"P" : gtob.psf
 	}
 
 	for var in varDict:
