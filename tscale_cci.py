@@ -852,7 +852,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 	varDict={
 	"t":T,
 	"ws"   : ws,
-	"shum" : SH,  
+	"shum" : SH.transpose(),  
 	"swin" : gtob.swin,
 	"lwin" : gtob.lwin, 
 	"prate": prate, 
