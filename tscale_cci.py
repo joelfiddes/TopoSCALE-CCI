@@ -704,7 +704,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		p1=np.tile(gpob.levels[::-1],statz.shape[0])[thispVec]*1e2 #Convert to Pa. Reverse levels to ensure low ele (hig pressure) to high elel (low pressure)
 		Tbar=np.mean([T1, gtob.t[:, i]],axis=0) # temperature midway between surface (toposcale T) and loweset overlying level (T1)
 		""" Hypsometric equation.""" #P1 is above surface is this correct? Yes!
-		psf[i,:]=(p1*np.exp((z1-statz)*(g/(Tbar*R)))) # exponent is positive ie increases pressure as surface is lower than pressure level
+		psf[i,:]=p1*np.exp(   ((z1/g)-(statz/g))*(g/(Tbar*R))  ) # exponent is positive ie increases pressure as surface is lower than pressure level
 
 
 	""" Maybe follow Dubayah's approach (as in Rittger and Girotto) instead
@@ -781,7 +781,7 @@ def main(coords,eraDir, outDir,startDT, endDT, startIndex):
 		p1=np.tile(gpob.levels[::-1],statz.shape[0])[thispVec]*1e2 #Convert to Pa.
 		Tbar=np.mean([T0, T1],axis=0)
 		""" Hypsometric equation."""
-		psc[i,:] = (p1*np.exp((z1-z0)*(g/(Tbar*R))))
+		psc[i,:] = p1*np.exp(      ( (z1/g)-(z0/g) )* (g/(Tbar*R))   )
 
 
 
